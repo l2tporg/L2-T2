@@ -5,7 +5,9 @@
   "author": "sak39 <dnsn.isk@gmail.com>",
   "description": "A slack bot watching information of servers and pushing some warning to slack, created by hubot.",
   "dependencies": {
+    "cron": "^1.1.0",
     "hubot": "^2.19.0",
+    "hubot-cron": "^0.2.9",
     "hubot-diagnostics": "0.0.1",
     "hubot-google-images": "^0.2.6",
     "hubot-google-translate": "^0.2.0",
@@ -17,7 +19,8 @@
     "hubot-rules": "^0.1.1",
     "hubot-scripts": "^2.17.2",
     "hubot-shipit": "^0.2.0",
-    "hubot-slack": "^3.4.2"
+    "hubot-slack": "^3.4.2",
+    "time": "^0.11.4"
   },
   "engines": {
     "node": "0.10.x"
