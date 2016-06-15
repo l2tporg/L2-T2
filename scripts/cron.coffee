@@ -5,13 +5,20 @@ module.exports = (robot) ->
 #      robot.send {room: "#bot"}, "おはようございます！"
 
   cronjob = new cronJob(
-    cronTime: "1 * * * * *"     # 実行時間 s m h d w m
+    cronTime: "0 1 0 * * * *"     # 実行時間 s m h d w m
     start:    true              # すぐにcronのjobを実行するか
     timeZone: "Asia/Tokyo"      # タイムゾーン指定
     onTick: ->                  # 時間が来た時に実行する処理
 #      sayHello()
       robot.send {room: "#bot"}, "おはようございます！"
   )
+  robot.respond /start job/i, (msg) ->
+    msg.send "Start job.."
+    job.start()
+
+  robot.respond /stop job/i, (msg) ->
+    msg.send "Stop job.."
+    job.stop()
 #
 #  robot.respond /hello/i, (msg) ->
 #    msg.send 'World!'
