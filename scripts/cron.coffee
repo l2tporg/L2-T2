@@ -1,21 +1,22 @@
 cronJob = require('cron').CronJob
 
 module.exports = (robot) ->
-  sayHello = ->
-      robot.send {room: "#bot"}, "おはようございます！"
+#  sayHello = ->
+#      robot.send {room: "#bot"}, "おはようございます！"
 
   cronjob = new cronJob(
-    cronTime: "0 1 0 * * *"     # 実行時間 s m h d w m
+    cronTime: "0 1 * * * *"     # 実行時間 s m h d w m
     start:    true              # すぐにcronのjobを実行するか
     timeZone: "Asia/Tokyo"      # タイムゾーン指定
     onTick: ->                  # 時間が来た時に実行する処理
-      sayHello()
+#      sayHello()
+      robot.send {room: "#bot"}, "おはようございます！"
   )
+#
+#  robot.respond /hello/i, (msg) ->
+#    msg.send 'World!'
 
-  robot.respond /hello/i, (msg) ->
-    msg.send 'World!'
-
-    ### 毎分hello ###
+### 毎分hello ###
 #  IntervalHello = new cronJob(
 #    cronTime: '10 * * * * *'
 #    start: true
