@@ -2,7 +2,7 @@ cronJob = require('cron').CronJob
 
 module.exports = (robot) ->
   sayHello = ->
-      robot.send {room: "#sak39_sandbox"}, "おはようございます！"
+      robot.send {room: "#bot"}, "おはようございます！"
 
   cronjob = new cronJob(
     cronTime: "0 1 0 * * *"     # 実行時間 s m h d w m
