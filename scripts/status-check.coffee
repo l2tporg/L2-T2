@@ -15,6 +15,7 @@ module.exports = (robot) ->
     for u, s in urls #u: url, s:status
       robot.logger.info u, s #@@
       robot.emit 'healthcheck:url', {url: u, status: s}
+
 #    robot.emit 'healthcheck:url', {url: 'https://www.google.com', status: 200}
 #    robot.emit 'healthcheck:url', {url: 'http://takamachi.com/hogehoge', status: 200}
 #    robot.emit 'healthcheck:url', {url: 'http://sasukene.info', status: 500}
