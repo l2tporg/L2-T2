@@ -2,27 +2,42 @@ request = require('request')
 module.exports = (robot) ->
   ### tmp check ###
   robot.hear /sc sites/i, (msg) ->
+    statusCheck(msg)
+
+  statusCheck = (msg) ->
     msg.send 'checking...'
     key = 'sites'
-    urls = robot.brain.get(key) ? []
-    url = urls.map (i) ->
-        "#{i.url} #{i.status}"
-      .join '\n'
-    msg.send url
-    msg.send urls.length
-    msg.send urls[0]
+    
+    ##adding 
+#    messages = robot.brain.get(key) ? []
+#    i = { url: "http://google.com", status: 200}
+#    messages.push i
+#    i = { url: "http://yahoo.co.jp", status: 200}
+#    messages.push i
+#    robot.brain.set(key, messages)
+#    msg.send "added #{i.url}, #{i.status}"
 
-    for u, s in urls #u: url, s:status
-      robot.logger.info u, s #@@
-      robot.emit 'healthcheck:url', {url: u, status: s}
+    #getting
+    urls = robot.brain.get(key) ? []
+#    url = urls.map (i) ->
+#        "#{i.url} #{i.status}"
+#      .join '\n'
+#
+    robot.logger.info urls
+    for valueObject, key in urls #u: url, s:status
+      robot.send({room: "bot"}, 'key: '+key, 'url: '+ valueObject.url, 'staus: '+ valueObject.status)
+
+#    for u, s in urls #u: url, s:status
+#      robot.logger.info u, s #@@
+      robot.emit 'healthcheck:url', {url: valueObject.url, status: valueObject.status}
 
 #    robot.emit 'healthcheck:url', {url: 'https://www.google.com', status: 200}
 #    robot.emit 'healthcheck:url', {url: 'http://takamachi.com/hogehoge', status: 200}
 #    robot.emit 'healthcheck:url', {url: 'http://sasukene.info', status: 500}
-#
 
-
+  ###test module###
   test = ->
+
     messages = []
     key = 'sites'
     i = { url: 'www.google.com', status: 200}
@@ -30,17 +45,13 @@ module.exports = (robot) ->
     i = { url: 'www.yahoo.co.jp', status: 200}
     messages.push i
     robot.logger.info messages
-    messages = [
-      hoge: {url: 'hoge.com'},
-      fuga: {url: 'fuga.com'}
-    ]
-    robot.logger.info messages
-    for valueObject, key1 in messages #u: url, s:status
-      robot.send({room: "bot"}, 'key1: '+key1)
-      for value, key2 of valueObject
-        robot.send({room: "bot"}, 'key: '+key2)
-        # robot.send({room: "bot"}, 'value: ' + value)
-        robot.logger.info value
+#    messages = [
+#      hoge: {url: 'hoge.com'},
+#      fuga: {url: 'fuga.com'}
+#    ]
+
+    for valueObject, key in messages #u: url, s:status
+      robot.send({room: "bot"}, 'key: '+key, 'url: '+ valueObject.url, 'staus: '+ valueObject.status)
     # robot.logger.info key, value, key #@@
 
     process.exit()
@@ -56,33 +67,34 @@ module.exports = (robot) ->
     # robot.send({room: "bot"}, 'hello')
     process.exit()
 
-  # test()
+#  test()
+
 
 
 
 
   ### Event class ###
   robot.on 'healthcheck:url', (data) ->
-      options = {
-        url: data.url
-        status: data.status
-        headers: "User-Agent":"iPhone"
-      }
-      request.get options, (err, res, body) ->
+    options = {
+      url: data.url
+      status: data.status
+      headers: "User-Agent":"iPhone"
+    }
+    request.get options, (err, res, body) ->
 #        robot.logger.info data.status
 #        robot.logger.info options.url
 #        robot.logger.info res.statusCode
-        if err
+      if err
 #          robot.logger.error err
 #          robot.send {room: "notifications"}, "error: #{res.statusCode}"
-          robot.send {room: "bot"}, err
-        else if res.statusCode is options.status
-          msg = "#{options.url} : #{res.statusCode}"
-          robot.send {room: "bot"}, msg + " All right :)"
-        else if res.statusCode isnt options.status #doesn't matched
+        robot.send {room: "bot"}, err
+      else if res.statusCode is options.status
+        msg = "#{options.url} : #{res.statusCode}"
+        robot.send {room: "bot"}, msg + " All right :)"
+      else if res.statusCode isnt options.status #doesn't matched
 #          robot.logger.error err
-          msg = "#{options.url} : #{res.statusCode}"
-          robot.send {room: "bot"}, msg + " Something wrong :("
+        msg = "#{options.url} : #{res.statusCode}"
+        robot.send {room: "bot"}, msg + " Something wrong :("
 #        else if res.statusCode isnt 200 #!200
 ##          robot.logger.error res.headers
 ##          robot.send {room: "bot"}, "success: #{res.statusCode}"
