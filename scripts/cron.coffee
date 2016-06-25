@@ -16,15 +16,15 @@ module.exports = (robot) ->
 #      robot.send {room: "#bot"}, "おはようございます！"
   )
 
-  robot.respond /start job/i, (msg) ->
+  robot.hear /start job/i, (msg) ->
     msg.send "Start job.."
     cronjob.start()
 
-  robot.respond /stop job/i, (msg) ->
+  robot.hear /stop job/i, (msg) ->
     msg.send "Stop job.."
     cronjob.stop()
 #
-#  robot.respond /hello/i, (msg) ->
+#  robot.hear /hello/i, (msg) ->
 #    msg.send 'World!'
 
 ### 毎分hello ###
