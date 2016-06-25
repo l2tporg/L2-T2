@@ -20,6 +20,47 @@ module.exports = (robot) ->
 #    robot.emit 'healthcheck:url', {url: 'http://takamachi.com/hogehoge', status: 200}
 #    robot.emit 'healthcheck:url', {url: 'http://sasukene.info', status: 500}
 #
+
+
+  test = ->
+    messages = []
+    key = 'sites'
+    i = { url: 'www.google.com', status: 200}
+    messages.push i
+    i = { url: 'www.yahoo.co.jp', status: 200}
+    messages.push i
+    robot.logger.info messages
+    messages = [
+      hoge: {url: 'hoge.com'},
+      fuga: {url: 'fuga.com'}
+    ]
+    robot.logger.info messages
+    for valueObject, key1 in messages #u: url, s:status
+      robot.send({room: "bot"}, 'key1: '+key1)
+      for value, key2 of valueObject
+        robot.send({room: "bot"}, 'key: '+key2)
+        # robot.send({room: "bot"}, 'value: ' + value)
+        robot.logger.info value
+    # robot.logger.info key, value, key #@@
+
+    process.exit()
+
+    robot.brain.set(key, messages)
+    urls = robot.brain.get(key) ? []
+    robot.logger.info urls
+
+    for value, key in urls #u: url, s:status
+      robot.logger.info value, key #@@
+      # robot.emit 'healthcheck:url', {url: u, status: s}
+
+    # robot.send({room: "bot"}, 'hello')
+    process.exit()
+
+  # test()
+
+
+
+
   ### Event class ###
   robot.on 'healthcheck:url', (data) ->
       options = {
