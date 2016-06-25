@@ -3,10 +3,15 @@ module.exports = (robot) ->
   ### tmp check ###
   robot.respond /status check/i, (msg) ->
     msg.send 'checking...'
-    robot.emit 'healthcheck:url', {url: 'https://www.google.com', status: 200}
-    robot.emit 'healthcheck:url', {url: 'http://takamachi.com/hogehoge', status: 200}
-    robot.emit 'healthcheck:url', {url: 'http://sasukene.info', status: 500}
-
+    
+    urls = getUrls()
+    for u, s of urls #u: url, s:status
+      robot.logger.info url, status #@@
+      robot.emit 'healthcheck:url', {url: u, status: s}
+#    robot.emit 'healthcheck:url', {url: 'https://www.google.com', status: 200}
+#    robot.emit 'healthcheck:url', {url: 'http://takamachi.com/hogehoge', status: 200}
+#    robot.emit 'healthcheck:url', {url: 'http://sasukene.info', status: 500}
+#
   ### Event class ###
   robot.on 'healthcheck:url', (data) ->
       options = {
@@ -28,7 +33,7 @@ module.exports = (robot) ->
         else if res.statusCode isnt options.status #doesn't matched
 #          robot.logger.error err
           msg = "#{options.url} : #{res.statusCode}"
-          robot.send {room: "bot"}, msg + " Something is wrong :("
+          robot.send {room: "bot"}, msg + " Something wrong :("
 #        else if res.statusCode isnt 200 #!200
 ##          robot.logger.error res.headers
 ##          robot.send {room: "bot"}, "success: #{res.statusCode}"
@@ -40,3 +45,5 @@ module.exports = (robot) ->
 ##          robot.send {room: "bot"}, "success: #{res.statusCode}"
 #          msg = "#{options.url} : #{res.statusCode}"
 #          robot.send {room: "bot"}, msg
+    
+    
