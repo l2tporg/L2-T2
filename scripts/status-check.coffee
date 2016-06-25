@@ -1,13 +1,19 @@
 request = require('request')
 module.exports = (robot) ->
   ### tmp check ###
-  robot.respond /status check/i, (msg) ->
+  robot.hear /status check/i, (msg) ->
     msg.send 'checking...'
     
-    urls = getUrls()
-    for u, s of urls #u: url, s:status
-      robot.logger.info url, status #@@
-      robot.emit 'healthcheck:url', {url: u, status: s}
+    urls = robot.brain.get(key) ? []
+    url = urls.map (i) ->
+      "#{i.url} #{i.status}"
+      .join '\n'
+    msg.send url
+
+#    for u, s of urls #u: url, s:status
+#      robot.logger.info u, s #@@
+#
+#      robot.emit 'healthcheck:url', {url: u, status: s}
 #    robot.emit 'healthcheck:url', {url: 'https://www.google.com', status: 200}
 #    robot.emit 'healthcheck:url', {url: 'http://takamachi.com/hogehoge', status: 200}
 #    robot.emit 'healthcheck:url', {url: 'http://sasukene.info', status: 500}
