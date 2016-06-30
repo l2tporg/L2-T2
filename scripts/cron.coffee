@@ -1,3 +1,12 @@
+# Description
+#   node-cronで定期実行
+#
+# Author:
+#   @sak39
+#
+# Thanks:
+#   http://qiita.com/hotakasaito/items/03386fe1a68e403f5cb8
+
 cronJob = require('cron').CronJob
 
 module.exports = (robot) ->

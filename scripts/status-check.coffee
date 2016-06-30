@@ -1,4 +1,14 @@
+# Description
+#   ステータスチェックを行うメインクラス(メソッド)
+#
+# brainやcronからemitで'healthcheck:url'クラスが呼び出される
+#
+# Author:
+#   @sak39
+#
+
 request = require('request')
+
 module.exports = (robot) ->
   ### tmp check ###
   robot.hear /sc sites/i, (msg) ->
