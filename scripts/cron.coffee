@@ -18,10 +18,11 @@ module.exports = (robot) ->
     timeZone: "Asia/Tokyo"      # タイムゾーン指定
     onTick: ->                  # 時間が来た時に実行する処理
       # checkd url #
-      robot.emit 'healthcheck:url', {url: 'https://www.google.com', status: 200}
-      robot.emit 'healthcheck:url', {url: 'http://takamachi.com/hogehoge', status: 200}
-      robot.emit 'healthcheck:url', {url: 'http://sasukene.info', status: 500}
-    
+      data = getData()
+#      robot.emit 'healthcheck:url', {url: 'https://www.google.com', status: 200}
+#      robot.emit 'healthcheck:url', {url: 'http://takamachi.com/hogehoge', status: 200}
+#      robot.emit 'healthcheck:url', {url: 'http://sasukene.info', status: 500}
+#    
 #      robot.send {room: "#bot"}, "おはようございます！"
   )
 
