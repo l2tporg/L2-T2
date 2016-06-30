@@ -9,7 +9,8 @@ module.exports = (robot) ->
   robot.hear /sc add (\S+) (\d+)$/, (msg) ->
 #    data = robot.brain.get('url') ? [] #２重登録を阻止?
     
-    data = robot.brain.get(key) ? []
+    data = getData()
+#    data = robot.brain.get(key) ? []
     i = { url: msg.match[1], status: msg.match[2]}
     data.push i
     robot.brain.set(key, data)
@@ -33,8 +34,9 @@ module.exports = (robot) ->
   ### command: sc update <index> <new_satus> ###
   robot.hear /sc update (\d+) (\d+)$/, (msg) ->
     data = getData()
+#    data = updateSite msg.match[1], msg.match[2] #index, new_status
     if updateSite msg.match[1], msg.match[2] #index, new_status
-      msg.send "updated #{data.url}, #{data.status}"
+      msg.send "updated #{data[msg.match[1]].url}, #{data[msg.match[1]].status}"
     else
       msg.send "error: There are no such registered site."
 
@@ -50,8 +52,8 @@ module.exports = (robot) ->
   ###### Modules #######
   # getData
   getData = ->
-#    data = robot.brain.get(key) ? []
-    data = robot.brain.get(key) or {} #こちらでも良い
+    data = robot.brain.get(key) ? []
+#    data = robot.brain.get(key) or {} #ハッシュで管理する場合はこちら
     return data
   
   ### Remove ###
