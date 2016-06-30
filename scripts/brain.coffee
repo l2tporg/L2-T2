@@ -3,6 +3,7 @@ moment = require 'moment'
 module.exports = (robot) ->
   key = 'sites'
 
+  ### Add Function ###
   robot.hear /sc add (\S+) (\d+)$/, (msg) ->
 #    messages = robot.brain.get('url') ? [] #２重登録を阻止?
     
@@ -13,12 +14,53 @@ module.exports = (robot) ->
     msg.send "added #{i.url}, #{i.status}"
 #    robot.logger.info robot.brain.data
 #
+  ### Remove Function ###
+  robot.hear /sc rm (\S+)$/, (msg) ->
+    if removeSite(msg.match[1])
+      msg.send "removed #{msg.match[1]}, #{msg.match[2]}"
+    else
+      msg.send "error: There are no such registered site."
+
+  ### Update Function ###
+  robot.hear /sc update (\S+) (\d+)$/, (msg) ->
+    messages = robot.brain.get(key) ? []
+    message = messages.map (i) ->
+        "#{i.url} #{i.status}"
+      .join '\n'
+    msg.send message
+    
+  ### Get List Function ###
   robot.hear /sc list$/, (msg) ->
     messages = robot.brain.get(key) ? []
     message = messages.map (i) ->
         "#{i.url} #{i.status}"
       .join '\n'
     msg.send message
+    
+    
+  ### Modules ###
+  # remove
+  removeSite = (siteName) ->
+    data = getData()
+#    robot.logger.info data
+    for obj, key in data
+#      console.log key
+#      console.log obj
+      if data[key]['url'] is siteName
+        robot.brain.remove(key) #削除
+        return true
+      else
+        return false
+#    if data.url.siteName is undefined
+#      return false
+#    delete data.url.siteName #url: siteName
+#    return true
+  
+  # getData
+  getData = ->
+#    data = robot.brain.get(key) ? []
+    data = robot.brain.get(key) or {} #こちらでも良い
+    return data
     
 #  robot.hear /7d add (\S+)$/, (msg) ->
 #    message = msg.match[1]
