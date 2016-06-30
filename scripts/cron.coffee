@@ -17,14 +17,13 @@ module.exports = (robot) ->
     start:    true              # すぐにcronのjobを実行するか
     timeZone: "Asia/Tokyo"      # タイムゾーン指定
     onTick: ->                  # 時間が来た時に実行する処理
-      # checkd url #
-      data = getData()
-#      robot.emit 'healthcheck:url', {url: 'https://www.google.com', status: 200}
-#      robot.emit 'healthcheck:url', {url: 'http://takamachi.com/hogehoge', status: 200}
-#      robot.emit 'healthcheck:url', {url: 'http://sasukene.info', status: 500}
-#    
-#      robot.send {room: "#bot"}, "おはようございます！"
-  )
+#      key = 'sites'
+#
+#      #getting
+#      urls = robot.brain.get(key) ? []
+#      robot.logger.info urls
+#      for valueObject, key in urls #u: url, s:status
+#        robot.emit 'healthcheck:url', {url: valueObject.url, status: valueObject.status}
 
   robot.hear /start job/i, (msg) ->
     msg.send "Start job.."

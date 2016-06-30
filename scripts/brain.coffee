@@ -85,7 +85,7 @@ module.exports = (robot) ->
     ### 最後の出力に使う###
     tmp = {url: data[index].url, status: data[index].status} #避難
     ### indexから1つ削除 ###
-    data.splice(index, 1) 
+    data.splice(index, 1)
     return tmp
 
   ### Update ###
