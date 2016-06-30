@@ -37,35 +37,35 @@ module.exports = (robot) ->
 
   ###test module###
   test = ->
-
-    messages = []
-    key = 'sites'
-    i = { url: 'www.google.com', status: 200}
-    messages.push i
-    i = { url: 'www.yahoo.co.jp', status: 200}
-    messages.push i
-    robot.logger.info messages
-#    messages = [
-#      hoge: {url: 'hoge.com'},
-#      fuga: {url: 'fuga.com'}
-#    ]
-
-    for valueObject, key in messages #u: url, s:status
-      robot.send({room: "bot"}, 'key: '+key, 'url: '+ valueObject.url, 'staus: '+ valueObject.status)
-    # robot.logger.info key, value, key #@@
-
-    process.exit()
-
-    robot.brain.set(key, messages)
-    urls = robot.brain.get(key) ? []
-    robot.logger.info urls
-
-    for value, key in urls #u: url, s:status
-      robot.logger.info value, key #@@
-      # robot.emit 'healthcheck:url', {url: u, status: s}
-
-    # robot.send({room: "bot"}, 'hello')
-    process.exit()
+#
+#    messages = []
+#    key = 'sites'
+#    i = { url: 'www.google.com', status: 200}
+#    messages.push i
+#    i = { url: 'www.yahoo.co.jp', status: 200}
+#    messages.push i
+#    robot.logger.info messages
+##    messages = [
+##      hoge: {url: 'hoge.com'},
+##      fuga: {url: 'fuga.com'}
+##    ]
+#
+#    for valueObject, key in messages #u: url, s:status
+#      robot.send({room: "bot"}, 'key: '+key, 'url: '+ valueObject.url, 'staus: '+ valueObject.status)
+#    # robot.logger.info key, value, key #@@
+#
+#    process.exit()
+#
+#    robot.brain.set(key, messages)
+#    urls = robot.brain.get(key) ? []
+#    robot.logger.info urls
+#
+#    for value, key in urls #u: url, s:status
+#      robot.logger.info value, key #@@
+#      # robot.emit 'healthcheck:url', {url: u, status: s}
+#
+#    # robot.send({room: "bot"}, 'hello')
+#    process.exit()
 
 #  test()
 
