@@ -24,6 +24,7 @@ module.exports = (robot) ->
 #      robot.logger.info urls
 #      for valueObject, key in urls #u: url, s:status
 #        robot.emit 'healthcheck:url', {url: valueObject.url, status: valueObject.status}
+  )
 
   robot.hear /start job/i, (msg) ->
     msg.send "Start job.."

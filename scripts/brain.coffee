@@ -31,8 +31,8 @@ module.exports = (robot) ->
       robot.brain.set(key, data)
       index = searchIndex(data, "#{i.url}") #正規の用法のsearchIndex
       msg.send "added #{index}: #{i.url}, #{i.status}"
-      robot.logger.info data
-      robot.logger.info i
+#      robot.logger.info data
+#      robot.logger.info i
     else
       msg.send "Such url had already been registered."
     
