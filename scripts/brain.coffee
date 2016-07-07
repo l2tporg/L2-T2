@@ -20,16 +20,30 @@ __ = require 'lodash'
 module.exports = (robot) ->
   key = 'sites'
 
+  #################### Test Module ###################
+  robot.hear /sc error/i, (msg) ->
+    statusCheck(msg)
+    
+  ###status check function ###
+  statusCheck = (msg) ->
+    console.log "checking...."
+    data = getData()
+    for obj in data
+#      robot.send {room: "bot"}, "url: #{obj.url} status: #{obj.status}"
+      robot.emit 'healthcheck:url:error2', {url: obj.url, status: obj.status}
+  #################################
+
   ### Add Function ###
   robot.hear /sc add (\S+) (\d+)$/, (msg) ->
 #    data = robot.brain.get('url') ? [] #２重登録を阻止?
-    
     data = getData()
-    i = { url: msg.match[1], status: msg.match[2]}
+    url = msg.match[1]
+    status = Number(msg.match[2])
+    i = { url: url, status: status}
     if checkConfliction(data, i.url) #重複検査, data内にi.urlが存在していなければtrue
       data.push i
       robot.brain.set(key, data)
-      index = searchIndex(data, "#{i.url}") #正規の用法のsearchIndex
+      index = searchIndex(data, "#{i.url}")
       msg.send "added #{index}: #{i.url}, #{i.status}"
 #      robot.logger.info data
 #      robot.logger.info i
@@ -38,7 +52,7 @@ module.exports = (robot) ->
     
   ### Get List Function ###
   robot.hear /sc list$/, (msg) ->
-    data = robot.brain.get(key) ? []
+    data = getData()
     message = data.map (i) ->
         "#{searchIndex(data, i.url)}: #{i.url} #{i.status}"
       .join '\n'
