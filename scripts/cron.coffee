@@ -8,21 +8,22 @@
 #   http://qiita.com/hotakasaito/items/03386fe1a68e403f5cb8
 
 cronJob = require('cron').CronJob
-brain = require('./brain')
+Urls = require('./brainClass')
 
 module.exports = (robot) ->
 #  sayHello = ->
 #      robot.send {room: "#bot"}, "おはようございます！"
   cronjob = new cronJob(
-    cronTime: "0 0 1 * * *"     # 実行時間 s m h d w m
+    cronTime: "0 1 * * * *"     # 実行時間 s m h d w m
     start:    true              # すぐにcronのjobを実行するか
     timeZone: "Asia/Tokyo"      # タイムゾーン指定
     onTick: ->                  # 時間が来た時に実行する処理
     #################
-      data = brain.getData
+      urls = new Urls(robot)
+      data = urls.getData()
       for obj in data
-        robot.send {room: "bot"}, "url: #{obj.url} status: #{obj.status}"
-        robot.emit 'healthcheck:url:error', {url: obj.url, status: obj.status}
+#        robot.send {room: "bot"}, "url: #{obj.url} status: #{obj.status}"
+        robot.emit 'healthcheck:url:error2', {url: obj.url, status: obj.status}
     ##############
   )
 
