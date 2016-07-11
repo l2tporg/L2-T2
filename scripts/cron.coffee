@@ -8,7 +8,7 @@
 #   http://qiita.com/hotakasaito/items/03386fe1a68e403f5cb8
 
 cronJob = require('cron').CronJob
-Urls = require('./brainClass')
+Urls = require('./brainClass.coffee')
 
 module.exports = (robot) ->
 #  sayHello = ->
