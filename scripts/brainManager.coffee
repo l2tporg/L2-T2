@@ -1,5 +1,5 @@
 # Description
-#   検査対象のサイトのurl、statusCodeのCRUD処理
+#   データ保存用のbrain(Urls)クラスの操作用スクリプト
 #
 # Commands: [省略可能]:, <引数>
 #   [l2-t2] add <url> <status> -- 検査するサイトを登録
@@ -16,17 +16,14 @@
 Urls = require('./brainClass')
 
 module.exports = (robot) ->
-  ### tmp check ###
+  ### 明示的なサイトチェック ###
   robot.hear /sc sites/i, (msg) ->
-    statusCheck(msg)
-
-  ###status check function ###
-  statusCheck = (msg) ->
     console.log "checking..." #@@
     urls = new Urls(robot)
     data = urls.getData()
     for obj, key in data #u: url, s:status
       robot.send {room: "bot"}, "#{obj.url} status:  #{obj.status}" #@@
+      #エラーのみ通知
       robot.emit 'healthcheck:url:error2', {url: obj.url, status: obj.status}
 
   ### Add Function ###
