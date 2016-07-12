@@ -12,7 +12,6 @@
 #
 # Thanks:
 #   http://sota1235.hatenablog.com/entry/2015/06/15/001400
-
 Urls = require('./brainClass')
 
 module.exports = (robot) ->
@@ -27,7 +26,7 @@ module.exports = (robot) ->
       robot.emit 'healthcheck:url:error2', {url: obj.url, status: obj.status}
 
   ### Add Function ###
-  robot.hear /sc add (\S+) (\d+)$/, (msg) ->
+  robot.hear /sc[\s]+add[\s]+(\S+)[\s]+(\d+)$/, (msg) ->
 #    data = robot.brain.get('url') ? [] #２重登録を阻止?
     urls = new Urls(robot)
     data = urls.getData()
@@ -45,7 +44,7 @@ module.exports = (robot) ->
       msg.send "Such url had already been registered."
 
   ### Get List Function ###
-  robot.hear /sc list$/, (msg) ->
+  robot.hear /sc[\s]+list$/, (msg) ->
     urls = new Urls(robot)
     data = urls.getData()
 #    console.log msg
@@ -55,7 +54,7 @@ module.exports = (robot) ->
     msg.send message
 
   ### Update Function ###
-  robot.hear /sc update (\d+) (\d+)$/, (msg) ->
+  robot.hear /sc[\s]+update[\s]+(\d+)[\s]+(\d+)$/, (msg) ->
     urls = new Urls(robot)
     data = urls.getData()
 #    data = updateSite msg.match[1], msg.match[2] #index, new_status
@@ -65,7 +64,7 @@ module.exports = (robot) ->
       msg.send "error: There are no such registered site."
 
   ### Remove Function ###
-  robot.hear /sc remove (\d+)$/, (msg) ->
+  robot.hear /sc[\s]+remove[\s]+(\d+)$/, (msg) ->
 #    data.splice(msg.match[1],1) #0から1つ削除
 #    msg.send "success"
 #    robot.logger.info data
