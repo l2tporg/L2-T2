@@ -51,7 +51,11 @@ module.exports = (robot) ->
     message = data.map (i) ->
         "#{urls.searchIndex(data, i.url)}: #{i.url} #{i.status}"
       .join '\n'
-    msg.send message
+      
+    if message
+      msg.send message
+    else
+      msg.send "empty"
 
   ### Update Function ###
   robot.hear /sc[\s]+update[\s]+(\d+)[\s]+(\d+)$/, (msg) ->
