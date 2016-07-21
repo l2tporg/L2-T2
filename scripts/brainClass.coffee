@@ -1,11 +1,12 @@
 # Description
 #   検査対象のサイトのurl、statusCodeのCRUD処理
 #
-# Commands: [省略可能]:, <引数>
-#   [l2-t2] add <url> <status> -- 検査するサイトを登録
-#   [l2-t2] list -- 登録されたサイトをインデックス付きで表示
-#   [l2-t2] update <index> <new_status> -- 登録されたサイトのインデックスと新しいステータスを指定して更新
-#   [l2-t2] remove <index> -- 登録されたサイトをインデックスを指定して削除
+# Commands:
+#  ([省略可能]:, <引数>)
+#  [l2-t2] add <url> <status> -- 検査するサイトを登録
+#  [l2-t2] list -- 登録されたサイトをインデックス付きで表示
+#  [l2-t2] update <index> <new_status> -- 登録されたサイトのインデックスと新しいステータスを指定して更新
+#  [l2-t2] remove <index> -- 登録されたサイトをインデックスを指定して削除
 #
 # Author:
 #   @sak39

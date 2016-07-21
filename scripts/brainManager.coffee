@@ -20,7 +20,7 @@ module.exports = (robot) ->
     console.log "checking..." #@@
     urls = new Urls(robot)
     data = urls.getData()
-    for obj, key in data #u: url, s:status
+    for obj, key in data
       robot.send {room: "bot"}, "#{obj.url} status:  #{obj.status}" #@@
       #エラーのみ通知
       robot.emit 'healthcheck:url:error2', {url: obj.url, status: obj.status}
@@ -31,7 +31,7 @@ module.exports = (robot) ->
     urls = new Urls(robot)
     data = urls.getData()
     url = msg.match[1]
-    status = Number(msg.match[2])
+    status = Number(msg.match[2]) #Number型に明示的cast
     i = { url: url, status: status}
     if urls.checkConfliction(data, i.url) #重複検査, data内にi.urlが存在していなければtrue
       data.push i
@@ -47,11 +47,11 @@ module.exports = (robot) ->
   robot.hear /sc[\s]+list$/, (msg) ->
     urls = new Urls(robot)
     data = urls.getData()
-#    console.log msg
     message = data.map (i) ->
         "#{urls.searchIndex(data, i.url)}: #{i.url} #{i.status}"
       .join '\n'
       
+#    console.log "#{typeof data.status}" #@@
     if message
       msg.send message
     else
@@ -61,8 +61,10 @@ module.exports = (robot) ->
   robot.hear /sc[\s]+update[\s]+(\d+)[\s]+(\d+)$/, (msg) ->
     urls = new Urls(robot)
     data = urls.getData()
+    url = msg.match[1]
+    status = Number(msg.match[2]) #Number型に明示的cast
 #    data = updateSite msg.match[1], msg.match[2] #index, new_status
-    if urls.updateSite msg.match[1], msg.match[2] #index, new_status
+    if urls.updateSite url, status #url
       msg.send "updated #{data[msg.match[1]].url}, #{data[msg.match[1]].status}"
     else
       msg.send "error: There are no such registered site."

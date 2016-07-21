@@ -85,7 +85,8 @@ module.exports = (robot) ->
     request.get options, (err, res, body) ->
 #      console.log "res: #{data.url}, #{res.statusCode}" #@@
       if res is undefined
-        robot.send {room: "bot"}, "Error: Connection fail."
+        robot.send err
+        robot.send {room: "bot"}, "Error: #{data.url} Connection fail."
       else
 #        msg = "#{data.url} is #{res.statusCode}" #ここでerrでもresは取得できる
 #        robot.logger.info msg
