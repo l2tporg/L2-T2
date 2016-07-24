@@ -22,7 +22,7 @@ module.exports = (robot) ->
     urls = new Urls(robot)
     data = urls.getData()
     for obj, key in data
-      robot.send {room: "bot"}, "#{obj.url} status:  #{obj.status}" #@@
+      robot.send {room: "bot"}, "\"#{obj.url}\" status: #{obj.status}" #@@
       #各要素のurlとstatusを渡してエラーチェックemit
       robot.emit 'healthcheck:url:error2', {url: obj.url, status: obj.status}
 

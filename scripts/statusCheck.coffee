@@ -10,18 +10,6 @@
 request = require('request')
 
 module.exports = (robot) ->
-#  ### tmp check ###
-#  robot.hear /sc sites/i, (msg) ->
-#    statusCheck(msg)
-#
-#  ###status check function ###
-#  statusCheck = (msg) ->
-#    console.log "checking..."
-#    data = brain.getData()
-#    for obj, key in data #u: url, s:status
-#      robot.send {room: "bot"}, "#{obj.url} status:  #{obj.status}"
-#      robot.emit 'healthcheck:url:error', {url: obj.url, status: obj.status}
-
   ### Satus Check class ###
   robot.on 'healthcheck:url', (data) ->
     options = {
@@ -79,21 +67,12 @@ module.exports = (robot) ->
   robot.on 'healthcheck:url:error2', (data) ->
     options = {
       url: data.url
-      headers: "User-Agent":"iPhone"
     }
 #    console.log "data: #{data.url}, #{data.status}" #@@
     request.get options, (err, res, body) ->
-#      console.log "res: #{data.url}, #{res.statusCode}" #@@
-      if res is undefined
-        robot.send err
-        robot.send {room: "bot"}, "Error: #{data.url} Connection fail."
+      if err?
+        robot.send {room: "bot"}, "Error: \"#{data.url}\" Connection fail."
       else
-#        msg = "#{data.url} is #{res.statusCode}" #ここでerrでもresは取得できる
-#        robot.logger.info msg
-        if err
-          robot.send {room: "bot"}, "Error: Connection fail."
-  #        robot.logger.error err
-  #        robot.send {room: "notifications"}, err
-        else if res.statusCode isnt data.status #想定値と異なる時のみ通知(l2-t2の仕様は、200に限らない)
-#          robot.logger.error res.headers
+        ###想定値と一致するときは無言###
+        if res.statusCode isnt data.status #想定値と異なる時のみ通知(l2-t2の仕様は、200に限らない)
           robot.send {room: "bot"}, "ERROR: #{data.url} [expect]: #{data.status}, [actual]: #{res.statusCode}"
