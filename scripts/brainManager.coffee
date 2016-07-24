@@ -1,11 +1,12 @@
 # Description
 #   データ保存用のbrain(Urls)クラスの操作用スクリプト
 #
-# Commands: [省略可能]:, <引数>
-#   [l2-t2] add <url> <status> -- 検査するサイトを登録
-#   [l2-t2] list -- 登録されたサイトをインデックス付きで表示
-#   [l2-t2] update <index> <new_status> -- 登録されたサイトのインデックスと新しいステータスを指定して更新
-#   [l2-t2] remove <index> -- 登録されたサイトをインデックスを指定して削除
+# Commands:
+#  [省略可能], <引数>
+#  [l2-t2] add <url> <status> - 検査するサイトを登録
+#  [l2-t2] list - 登録されたサイトをインデックス付きで表示
+#  [l2-t2] update <index> <new_status> - 登録されたサイトのインデックスと新しいステータスを指定して更新
+#  [l2-t2] remove <index> - 登録されたサイトをインデックスを指定して削除
 #
 # Author:
 #   @sak39
@@ -22,7 +23,7 @@ module.exports = (robot) ->
     data = urls.getData()
     for obj, key in data
       robot.send {room: "bot"}, "#{obj.url} status:  #{obj.status}" #@@
-      #エラーのみ通知
+      #各要素のurlとstatusを渡してエラーチェックemit
       robot.emit 'healthcheck:url:error2', {url: obj.url, status: obj.status}
 
   ### Add Function ###
@@ -38,8 +39,6 @@ module.exports = (robot) ->
       robot.brain.set(key, data)
       index = urls.searchIndex(data, "#{i.url}")
       msg.send "added #{index}: #{i.url}, #{i.status}"
-#      robot.logger.info data
-#      robot.logger.info i
     else
       msg.send "Such url had already been registered."
 
@@ -50,7 +49,7 @@ module.exports = (robot) ->
     message = data.map (i) ->
         "#{urls.searchIndex(data, i.url)}: #{i.url} #{i.status}"
       .join '\n'
-      
+
 #    console.log "#{typeof data.status}" #@@
     if message
       msg.send message
