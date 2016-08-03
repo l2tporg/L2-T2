@@ -2,7 +2,7 @@
 #  hubot-site-health-examineを使ったサイト監視スクリプト
 #
 # Commands:
-#  []省略可能, <>:引数
+#  - []:省略可能, <>:引数
 #  [l2-t2] she add <URL:string> <STATUS:int> - 検査するサイトを登録
 #  [l2-t2] she list - 登録されたサイトをインデックス付きで表示
 #  [l2-t2] she update <INDEX:int> <NEW_STATUS:int> - 登録されたサイトのインデックスと新しいステータスを指定して更新
@@ -27,6 +27,11 @@ module.exports = (robot) ->
 
   ### 検査メソッドを自発的に発火 ###
   robot.hear /she examine/i, (msg) ->
+    console.log "examing..." #@@
+    list = nurse.getList()
+    robot.emit 'healthExamine', list, flags, "bot"
+
+  robot.hear /she check/i, (msg) ->
     console.log "examing..." #@@
     list = nurse.getList()
     robot.emit 'healthExamine', list, flags
