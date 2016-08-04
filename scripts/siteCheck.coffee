@@ -34,7 +34,7 @@ module.exports = (robot) ->
   robot.hear /she check/i, (msg) ->
     console.log "examing..." #@@
     list = nurse.getList()
-    robot.emit 'healthExamine', list, flags
+    robot.emit 'healthExamine', list, flags, "20160623hubot-serverc"
 
   cronjob = new cronJob(
     cronTime: "1 * * * * *"     # 実行時間 s m h d w m
@@ -43,7 +43,7 @@ module.exports = (robot) ->
     onTick: ->                  # 時間が来た時に実行する処理
       console.log("cron...")
       list = nurse.getList()
-      robot.emit 'healthExamine', list, flags
+      robot.emit 'healthExamine', list, flags, "bot"
   )
 
   robot.hear /start job/i, (msg) ->
