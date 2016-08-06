@@ -1,6 +1,9 @@
 # Description
 #  hubot-site-health-examineを使ったサイト監視スクリプト
 #
+# Commands:
+#  (l2-t2) she [examine|ex] - 監視メソッドを自発的に発火
+#
 # Author:
 #   @sak39
 #
@@ -18,6 +21,11 @@ module.exports = (robot) ->
   flags = [1,0,1]
 
   ### 検査メソッドを自発的に発火 ###
+  robot.hear /she ex(?:amine)?$/i, (msg) ->
+    console.log "examing..." #@@
+    list = nurse.getList()
+    for site in list
+      robot.emit 'healthExamine', site, flags, "bot"
   robot.hear /she examine/i, (msg) ->
     console.log "examing..." #@@
     list = nurse.getList()
