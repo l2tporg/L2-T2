@@ -26,19 +26,6 @@ module.exports = (robot) ->
     list = nurse.getList()
     for site in list
       robot.emit 'healthExamine', site, flags, "bot"
-  robot.hear /she examine/i, (msg) ->
-    console.log "examing..." #@@
-    list = nurse.getList()
-    for site in list
-      robot.emit 'healthExamine', site, flags, "bot"
-
-  ###テスト用###
-  ###hubot-servercチャネルに流す###
-  robot.hear /she check/i, (msg) ->
-    console.log "examing..." #@@
-    list = nurse.getList()
-    for site in list
-      robot.emit 'healthExamine', site, flags, "20160623hubot-serverc"
 
   cronjob = new cronJob(
     cronTime: "1 * * * * *"     # 実行時間 s m h d w m
@@ -59,4 +46,3 @@ module.exports = (robot) ->
     msg.send "Stop job.."
     cronjob.stop()
 
-  

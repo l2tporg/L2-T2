@@ -1,0 +1,12 @@
+[{
+    url: 'https:/google.com',
+    status: '200'
+  },
+  {
+    url: 'https://google.com',
+    status: '200'
+  },
+  {
+    url: 'http://yahoo.co.jp',
+    status: '200'
+  }]
