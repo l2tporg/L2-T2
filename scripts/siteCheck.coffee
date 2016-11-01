@@ -27,6 +27,7 @@ module.exports = (robot) ->
     for site in list
       robot.emit 'healthExamine', site, flags, "bot"
 
+
   cronjob = new cronJob(
     cronTime: "1 * * * * *"     # 実行時間 s m h d w m
     start:    true              # すぐにcronのjobを実行するか

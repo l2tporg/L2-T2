@@ -31,11 +31,11 @@ module.exports = (robot) ->
 #        console.log "hoge"
 #      else
 #        console.log "fuga"
-        
+
 #    msg.send "hi hello" #複数引数を渡すと複数発言
 #    msg.send sayHello ("sak") #()は省略可能
-    
-  
+
+
 
   ####### Modules ########
   #可変長引数
@@ -105,7 +105,7 @@ module.exports = (robot) ->
     console.log(index)
     console.log(__.findIndex(obj, {url: 'google'}))
     console.log(_.contains(new_obj, 'yahoo'))
-    
+
   ### get, post ####
   robot.respond /search (.*)/i, (msg) ->
     searchText = msg.match[1]
@@ -116,12 +116,10 @@ module.exports = (robot) ->
       .get() (err, res, body) ->
         if err
           msg.send "sorry, #{msg.message.user.name}. I cannot understand..."
-        # 返ってきた値を使って何かする
-        msg.send "#{res.data}"
       .post(data) (err, res, body) ->
         # 同上
-        
-        
+
+
   #### request #####
   robot.respond /request (.*)/i, (msg) ->
     ### header定義 ###
@@ -140,7 +138,7 @@ module.exports = (robot) ->
   #      password: "password"
   #    }
     }
-  
+
 #  asyncTest = ->
 #    async.series([
 #        function (callback) {
@@ -174,7 +172,7 @@ module.exports = (robot) ->
 #        }, 3000);
 #      });
     ### request送信 ###
-#    request(options, (error, response, body)) -> 
+#    request(options, (error, response, body)) ->
   #test module
 #  test()
 
