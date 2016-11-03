@@ -107,17 +107,17 @@ module.exports = (robot) ->
     console.log(_.contains(new_obj, 'yahoo'))
 
   ### get, post ####
-  robot.respond /search (.*)/i, (msg) ->
-    searchText = msg.match[1]
-    data =
-      hoge: 'hoge'
-      fuga: 'fuga'
-    robot.http('http://example.com')
-      .get() (err, res, body) ->
-        if err
-          msg.send "sorry, #{msg.message.user.name}. I cannot understand..."
-      .post(data) (err, res, body) ->
-        # 同上
+#  robot.respond /search (.*)/i, (msg) ->
+#    searchText = msg.match[1]
+#    data =
+#      hoge: 'hoge'
+#      fuga: 'fuga'
+#    robot.http('http://example.com')
+#      .get() (err, res, body) ->
+#        if err
+#          msg.send "sorry, #{msg.message.user.name}. I cannot understand..."
+#      .post(data) (err, res, body) ->
+#        # 同上
 
 
   #### request #####

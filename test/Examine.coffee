@@ -12,11 +12,21 @@ describe 'Examine', ->
   afterEach ->
     @room.destroy()
 
+
+
   it 'responds to hello', ->
-    @room.user.say('alice', '@hubot hello').then =>
+    @room.user.say('l2-t2', '@l2-t2 hello').then =>
       expect(@room.messages).to.eql [
-        ['alice', '@hubot hello']
-        ['hubot', '@alice hello!']
+        ['l2-t2', '@l2-t2 hello']
+        ['l2-t2', 'hello!']
+      ]
+
+  it 'responds to hello', ->
+    @room.user.say('Shell', '@l2-t2 ping').then =>
+      expect(@room.messages).to.eql [
+        ['Shell', '@l2-t2 ping']
+        ['l2-t2', 'PONG']
+
       ]
 
   it 'hears orly', ->
