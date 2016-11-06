@@ -2,7 +2,7 @@
 #  User Local Inc.の自動会話APIを使った会話スクリプト
 #
 # Commands:
-#  l2-t2 (好きに話しかけてください)
+#  l2-t2 好きに話しかけてください
 #
 # Author:
 #  @sak39
@@ -27,11 +27,9 @@ module.exports = (robot) ->
     robot.http("https://chatbot-api.userlocal.jp/api/chat")
          .query(message: msg.match[1], key:USER_LOCAL_API_KEY, bot_name: 'L2-T2', platform: 'slack', user_name: msg.message.user.name)
          .get() (err, res, body) ->
-#            console.log res
-#            console.log body
             if err
               console.log err
               return
             data = JSON.parse body
             msg.send data.result
-              
+
