@@ -12,4 +12,4 @@ module.exports = (robot) ->
     if message?.type == 'channel_created'
       return if typeof robot?.send isnt 'function'
 #      robot.send message
-      robot.send {room: "general"}, "New channel <##{message.channel.id}> was created. Thanks <@#{message.channel.creator}> !! "
+      robot.send {room: "general"}, "New channel <##{message.channel.id}> was created. NJ <@#{message.channel.creator}> !! "
